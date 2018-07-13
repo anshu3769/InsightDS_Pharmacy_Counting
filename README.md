@@ -2,35 +2,46 @@
 
 ## Directory Structure of the repository
 
-|-README.md 
+    README.md 
 
-|-run.sh
+    run.sh
 
-|-src
+    src
 
-  |-pharmacy-counting.py
+        pharmacy-counting.py
 
-|-input
-  |-itcont.txt
+    input
 
-output
+        itcont.txt
 
-    top_cost_drug.txt
+    output
 
-insight_testsuite
+        top_cost_drug.txt
 
-    run_tests.sh
+    insight_testsuite
+
+        run_tests.sh
+  
         tests
+        
             test_1
+            
                 input
+                
                     itcont.txt
                 output
+                
                     top_cost_drug.txt
             test_2
+            
                 input
+                
                     itcont.txt
+                    
                 output
+                
                     top_cost_drug.txt
+                    
                 
 The format of the input file (itcont.txt) is:
 
