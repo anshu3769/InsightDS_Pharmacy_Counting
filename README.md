@@ -25,9 +25,9 @@
                     |-top_cost_drug.txt
                     
                 
-The format of the input file (itcont.txt) is:
+## The format of the input file (itcont.txt) is:
 
-    ### id,prescriber_last_name,prescriber_first_name,drug_name,drug_cost
+    id,prescriber_last_name,prescriber_first_name,drug_name,drug_cost
     1000000001,Smith,James,AMBIEN,100
     1000000002,Garcia,Maria,AMBIEN,200
     1000000003,Johnson,James,CHLORPROMAZINE,1000
@@ -35,20 +35,21 @@ The format of the input file (itcont.txt) is:
     1000000005,Smith,David,BENZTROPINE MESYLATE,1500
 
 
-
-The format for the output file (top_cost_drug.txt) is:
+## The format for the output file (top_cost_drug.txt) is:
      drug_name,num_prescriber,total_cost
-     CHLORPROMAZINE,2,3000
-BENZTROPINE MESYLATE,1,1500
-AMBIEN,2,300
+    CHLORPROMAZINE,2,3000
+    BENZTROPINE MESYLATE,1,1500
+    AMBIEN,2,300
 
-### Problem Statement
+## Problem Statement
 Read the contents of the input file and generate a list of all drugs, the total number of UNIQUE individuals 
 who prescribed the medication, and the total drug cost,listed in descending order based on the total drug 
 cost and if there is a tie, drug name.
 
-### pharmacy_counting.py
-This script contains the code for solving the given problem. The script is well commented to understand the code. 
+## pharmacy_counting.py
+This script contains the code for solving the given problem. The script is well commented to understand the code.
+
+## Unit Testing
 
 
 
