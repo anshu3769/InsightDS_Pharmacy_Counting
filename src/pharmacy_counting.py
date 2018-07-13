@@ -103,7 +103,7 @@ class PharmacyData(object):
                             Values[2] = Values[2] + 1;
                             
                         #Update the total cost of the drug    
-                        Values[3] = Decimal(Values[3]) + Decimal(Values[3])
+                        Values[3] = Decimal(Values[3]) + Decimal(fields[4])
                         
                         #Update the record in the dictionary
                         drugDictionary[fields[3]] = Values
