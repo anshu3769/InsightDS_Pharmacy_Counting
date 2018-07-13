@@ -45,7 +45,7 @@ class PharmacyData(object):
         b) Location of the fields in a record
         These variables will be required while reading the input file.
         In future, if some new fields are added in a record or index of any field changes,
-        single change in the in this method will update the values in all the methods
+        single change in this method will update the values in all the methods
         where these variables are used.
         '''
         self.numberOfFieldsInARecord = 5
@@ -157,10 +157,11 @@ class PharmacyData(object):
 	This method refines the dictionary to contain
 	only the required fields and sorts the dictionary
 	based on total cost of the drugs in descending order first
-a	and if their is a tie, then drug name is used.
+	and if their is a tie, then drug name is used.
 	'''
 
         print("<--Enter extractFieldsFromDictionary  method")
+        orderedDrugDictionary = {}
         for key,values in drugDictionary.items():
             drugDictionary[key] = [values[2],int(values[3])]
         orderedDrugDictionary = OrderedDict(sorted(drugDictionary.items(), key=lambda k: ((k[1][1],k[0])),reverse=True))
@@ -212,8 +213,8 @@ def main():
     
     # Process the input file and store the result in the output file.
     pharmacyDataObject.readAndProcessTheInputFile(inputFilePath,drugDataDictionary)
-    orderedDrugData = pharmacyDataObject.extractFieldsFromDictionary(drugDataDictionary)
-    pharmacyDataObject.dictionaryToOutputFile(orderedDrugData,outputFilePath)
+    orderedDrugDataDictionary = pharmacyDataObject.extractFieldsFromDictionary(drugDataDictionary)
+    pharmacyDataObject.dictionaryToOutputFile(orderedDrugDataDictionary,outputFilePath)
 
 
 if __name__ == "__main__":
