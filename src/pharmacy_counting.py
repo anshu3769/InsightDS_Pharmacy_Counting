@@ -1,5 +1,6 @@
 
 from decimal import Decimal
+from collections import OrderedDict
 
 class PharmacyData(object):
     def __init__(self):
@@ -110,28 +111,30 @@ class PharmacyData(object):
                         
                     # The drug is new to the dictionary   
                     else:
-                        drugDictionary[fields[3]] = [fields[1],fields[2],uniquePrescribersCount,fields[4]]
+                        drugDictionary[fields[3]] = [fields[1],fields[2],uniquePrescribersCount,Decimal(fields[4])]
                 
-            #Sort the dictionary records first on total_cost for
-            #the drug and then drug_name
-            drugDictionary = sorted(drugDictionary, key=lambda k: (float(drugDictionary[k][3]), k))
-            
         finally:
             if inputFile: 
                 inputFile.close()
-                
+
+
+    def extractFieldsFromDictionary(self,drugDictionary):
+        for key,values in drugDictionary.items():
+            drugDictionary[key] = [values[2],int(values[3])]
+        orderedDrugData = OrderedDict(sorted(drugDictionary.items(), key=lambda k: ((k[1][1],k[0])),reverse=True))
+        return(orderedDrugData)        
+    
     def dictionaryToOutputFile(self,drugDictionary):
         """
         This method saves the drug dictionary 
         into an output file
         """
-        with open("top_cost_drug.txt", 'w') as file_handler:
+        with open("output/top_cost_drug.txt", 'w') as file_handler:
             temp_str = "drug_name" + "," + "num_prescriber" + "," + "total_cost\n"
             file_handler.write(temp_str)
             for key,value in drugDictionary.items():
-                temp_str = key + "," + str(value[2]) + "," + str(value[3])
+                temp_str = key + "," + str(value[0]) + "," + str(value[1])
                 file_handler.write("{}\n".format(temp_str))
-
 
 
 def main():
@@ -143,8 +146,9 @@ def main():
     
     drugDataDictionary = {}
     
-    pharmacyDataObject.readAndProcessTheInputFile("/Users/anshu/Downloads/de_cc_data.txt",drugDataDictionary)
-    pharmacyDataObject.dictionaryToOutputFile(drugDataDictionary)
+    pharmacyDataObject.readAndProcessTheInputFile("input/itcont.txt",drugDataDictionary)
+    orderedDrugData = pharmacyDataObject.extractFieldsFromDictionary(drugDataDictionary)
+    pharmacyDataObject.dictionaryToOutputFile(orderedDrugData)
 
 
 if __name__ == "__main__":
