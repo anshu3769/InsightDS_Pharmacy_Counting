@@ -1,15 +1,20 @@
-## Pharmacy_Counting
+# Pharmacy_Counting
 
-### Directory Structure of the repository
+## Directory Structure of the repository
 
 ├── README.md 
+
 ├── run.sh
+
 ├── src
 │   └── pharmacy-counting.py
+
 ├── input
 │   └── itcont.txt
+
 ├── output
 |   └── top_cost_drug.txt
+
 ├── insight_testsuite
     └── run_tests.sh
     └── tests
@@ -25,7 +30,8 @@
                 └── top_cost_drug.txt
                 
 The format of the input file (itcont.txt) is:
-id,prescriber_last_name,prescriber_first_name,drug_name,drug_cost
+
+### id,prescriber_last_name,prescriber_first_name,drug_name,drug_cost
 1000000001,Smith,James,AMBIEN,100
 1000000002,Garcia,Maria,AMBIEN,200
 1000000003,Johnson,James,CHLORPROMAZINE,1000
