@@ -2,16 +2,16 @@
 
 ## Directory Structure of the repository
 
-README.md 
+|-README.md 
 
-run.sh
-src
+|-run.sh
 
-    pharmacy-counting.py
+|-src
 
-input
+  |-pharmacy-counting.py
 
-    itcont.txt
+|-input
+  |-itcont.txt
 
 output
 
