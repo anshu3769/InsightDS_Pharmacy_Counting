@@ -1,9 +1,22 @@
 
+#This script 
+
+import argparse
+import sys
+import os
+
 from decimal import Decimal
 from collections import OrderedDict
 
 class PharmacyData(object):
     def __init__(self):
+        self.numberOfFieldsInARecord = 0
+        self.id_index = 0
+        self.prescribers_last_name_index = 0
+        self.prescribers_first_name_index = 0
+        self.drug_name_index = 0
+        self.drug_cost_index = 0
+        
         pass
     
     def isFieldANumber(self,x):
@@ -22,41 +35,60 @@ class PharmacyData(object):
         except ValueError:
             return False
 
+    def setVariablesForTheDataSet(self):
+        '''
+        This method sets the variables required 
+        for this problem. These variables are:
+        a)Number of fields in a record
+            -> Currently, a valid record contains 5 fields namely
+               id, prescriber_last_name, prescriber_first_name, drug_name, drug_cost
+        b) Location of the fields in a record
+        These variables will be required while reading the input file.
+        In future, if some new fields are added in a record or index of any field changes,
+        single change in the in this method will update the values in all the methods
+        where these variables are used.
+        '''
+        self.numberOfFieldsInARecord = 5
+        self.id_index = 0
+        self.prescribers_last_name_index = 1
+        self.prescribers_first_name_index = 2
+        self.drug_name_index = 3
+        self.drug_cost_index = 4
+       
     
     def isRecordValid(self,record):
         '''
         This method validates a record based on the project 
         requirements. 
-        For current project, 
-        a) Each record must have 5 fields which are 'id,prescriber_last_name,
-        prescriber_first_name,drug_name,drug_cost'.
+        For current project,
+        a) Each record must have number of fields equal to 
+         numberOfFieldsInARecord
         
         b) id and drug_cost must be positive numbers. 
         
         c) prescriber_last_name,prescriber_first_name,drug_name must 
         be string values.
         
-        Input parameter: record is in form of a comma seperated
-        values of the fields
-        
         Input: A record containing comma seperated fields
         Output: True/False based on validity of the record
         
         '''
-        if record is not None: 
+        if record is None:
+            print("Exit isRecordValid method -->")
+            return False
+        else: 
             fields = record.split(",")
-        if len(fields) is not 5:
-            return False
-        elif self.isFieldANumber(fields[0]) is False: 
-            return False
-        elif self.isFieldANumber(fields[4]) is False:
-            return False
-        elif float(fields[0]) < 0: 
-            return False
-        elif float(fields[4]) < 0:
-            return False
-        else:
-            return True
+            if len(fields) is not self.numberOfFieldsInARecord:
+                return False
+            if self.isFieldANumber(fields[self.id_index]) is False: 
+                return False
+            if self.isFieldANumber(fields[self.drug_cost_index]) is False:
+                return False
+            if float(fields[self.id_index]) < 0: 
+                return False
+            if float(fields[self.drug_cost_index]) < 0:
+                return False
+        return True
         
         
     def readAndProcessTheInputFile(self,inputFilePath,drugDictionary):
@@ -77,13 +109,13 @@ class PharmacyData(object):
                 result
         Output: drugDictionary with intermdediate results       
         '''
-        print("Inside readAndProcessTheInputFile")
+        print("<--Enter readAndProcessTheInputFile method")
         inputFile = None
-        print("Inside readAndProcessTheInputFile")
         try:
             inputFile = open(inputFilePath,"r")
         except (OSError, IOError) as exception:
             print("Error:File could not be opened. The exception details are:{}".format(exc))
+            print("Exit readAndProcessTheInputFile method-->")
             return False
         else:
             for line in inputFile:
@@ -95,74 +127,95 @@ class PharmacyData(object):
                     uniquePrescribersCount = 1; 
                     
                     #If the drug_name already exists in the dictionary
-                    if fields[3] in drugDictionary.keys(): 
-                        Values = drugDictionary[fields[3]]
+                    if fields[self.drug_name_index] in drugDictionary.keys():
+  			key = fields[self.drug_name_index] 
+                        Values = drugDictionary[fields[self.drug_name_index]]
                         
                         #If the prescriber is new for the drug. First name and last name
                         # are not present already for the drug
-                        if (fields[1] != Values[0]) or (fields[2] != Values[1]):
+                        if (fields[self.prescribers_last_name_index] != Values[0]) or (fields[self.prescribers_first_name_index] != Values[1]):
                             Values[2] = Values[2] + 1;
                             
                         #Update the total cost of the drug    
-                        Values[3] = Decimal(Values[3]) + Decimal(fields[4])
+                        Values[3] = Decimal(Values[3]) + Decimal(fields[self.drug_cost_index])
                         
                         #Update the record in the dictionary
-                        drugDictionary[fields[3]] = Values
+                        drugDictionary[key] = Values
                         
                     # The drug is new to the dictionary   
                     else:
-                        drugDictionary[fields[3]] = [fields[1],fields[2],uniquePrescribersCount,Decimal(fields[4])]
+                        drugDictionary[fields[self.drug_name_index]] = [fields[self.prescribers_last_name_index],fields[self.prescribers_first_name_index],uniquePrescribersCount,Decimal(fields[self.drug_cost_index])]
                 
         finally:
             if inputFile: 
                 inputFile.close()
+		print("Exit readAndProcessTheInputFile method-->")
 
 
     def extractFieldsFromDictionary(self,drugDictionary):
+	'''
+	This method refines the dictionary to contain
+	only the required fields and sorts the dictionary
+	based on total cost of the drugs in descending order first
+a	and if their is a tie, then drug name is used.
+	'''
+
+        print("<--Enter extractFieldsFromDictionary  method")
         for key,values in drugDictionary.items():
             drugDictionary[key] = [values[2],int(values[3])]
-        orderedDrugData = OrderedDict(sorted(drugDictionary.items(), key=lambda k: ((k[1][1],k[0])),reverse=True))
-        return(orderedDrugData)        
+        orderedDrugDictionary = OrderedDict(sorted(drugDictionary.items(), key=lambda k: ((k[1][1],k[0])),reverse=True))
+        print("Exit extractFieldsFromDictionary  method-->")
+        return(orderedDrugDictionary)        
     
-    def dictionaryToOutputFile(self,drugDictionary):
-        """
+    def dictionaryToOutputFile(self,drugDictionary,outputFilePath):
+        '''
         This method saves the drug dictionary 
         into an output file
-        """
-        with open("output/top_cost_drug.txt", 'w') as file_handler:
+        '''
+        print("<--Enter dictionaryToOutputFile  method")
+        with open(outputFilePath, 'w') as file_handler:
             temp_str = "drug_name" + "," + "num_prescriber" + "," + "total_cost\n"
             file_handler.write(temp_str)
             for key,value in drugDictionary.items():
                 temp_str = key + "," + str(value[0]) + "," + str(value[1])
                 file_handler.write("{}\n".format(temp_str))
+        print("Exit dictionaryToOutputFile  method-->")
 
 
 def main():
-    #print("Number of fields in a record are ",args.num_fields)
-    #print("Path for the input file is ", args.inputFile_path)
-    #print("Path for the output file is ", args.outputFile_path)
+
+    #Check if the input and output file paths exist 
+    inputFilePath = sys.argv[1]
+    outputFilePath = sys.argv[2]
+
+    if os.path.exists(inputFilePath):
+        print("Input file path exists. Program continues")
+    else:
+        print("Input file path does not exist on the system. Program exits")
+        return None
+
     
+    if os.path.exists(outputFilePath):
+        print("Output file path exists. Program continues")
+    else:
+        print("Output file path does not exist on the system. Program exits")
+        return None
+    
+    #Create an object of the PharmacyData class
     pharmacyDataObject = PharmacyData()
     
+    #Initialize the variables of the object
+    pharmacyDataObject.setVariablesForTheDataSet()
+
+    #Initialize empty drug dictionary.     
     drugDataDictionary = {}
     
-    pharmacyDataObject.readAndProcessTheInputFile("input/itcont.txt",drugDataDictionary)
+    # Process the input file and store the result in the output file.
+    pharmacyDataObject.readAndProcessTheInputFile(inputFilePath,drugDataDictionary)
     orderedDrugData = pharmacyDataObject.extractFieldsFromDictionary(drugDataDictionary)
-    pharmacyDataObject.dictionaryToOutputFile(orderedDrugData)
+    pharmacyDataObject.dictionaryToOutputFile(orderedDrugData,outputFilePath)
 
 
 if __name__ == "__main__":
-    #parser = argparse.ArgumentParser(description='Arguments to MainScript.')
-    #parser.add_argument('--page_url', default='https://en.wikipedia.org/wiki/yoga',
-    #               help='URL of the first wiki page to start downloading')
-    #parser.add_argument('--num_pages', default=10, type=int,
-    #               help='Number of Wiki pages to be downloaded')
-    #parser.add_argument('--doc_num', default=1, type=int,
-    #               help='Wiki doc number to be retieved from SQL database')
-    #parser.add_argument('--pattern', default='pattern',
-    #               help='Pattern to be searched in the database')
-    #parser.add_argument('--num_pages_to_mongodb', default=5, type=int,
-    #               help='Pages to be saved to mongodb from SQL db')
-    #args = parser.parse_args()	
     main()
 
