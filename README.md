@@ -47,37 +47,39 @@ who prescribed the medication, and the total drug cost,listed in descending orde
 cost and if there is a tie, drug name.
 
 ## pharmacy_counting.py
-This script contains the code for solving the given problem. The approach behind 
-solving the problem is as follows:
-1) Two dictionaries are maintained.
+    This script contains the code for solving the given problem. The approach behind 
+    solving the problem is as follows:
+
+    1) Two dictionaries are maintained.
     Dictionary 1 -> One for storing the unique number of prescribers and total cost against a drug.
             Key = Drug Name
             Value = [Unique number of prescribers, total cost of the drug]
     Dictionay 2 -> One for maintaining a list of subscribers against each drug
             Key = Drug Name
-            Value = List of subscribers
+            Value = List of subscribers by their id
             
             
-2) The input file is read line by line and the values in the dictionaries 
-are updated as follows:
-    -> If the drug in new to the dictionary
+    2) The input file is read line by line and the values in the dictionaries 
+    are updated as follows:
+        -> If the drug in new to the dictionary
             a)Initialize the prescribers count to 1 
             b)Store the prescibers count and drug cost against its name
             in Dictionary 1
-            c) Store the prescribers name (last name + first name + id) against
-            the drug name in Dictionary 2.
+            c) Store the prescribers id against the drug name in Dictionary 2.
             Point to be noted = First name and last name of two prescribers can be 
-            and stored in a dictionary whose key is 
-drug name and value is a list of first name of the prescribers, last name of 
-the prescribers, unique count of the prescribers and total cost of the drug. 
-
-->The name of the prescribers is maintained in the dictionary to identify 
- unique subscribers. If the key (drug name) already exists in the 
- dictionary, 
-            ->the cost of the drug will be updated by adding the current 
- cost with the cost from the newly read line.
-            ->If the last name and first name of the prescriber match 
-
+            same but the id must be unique.
+            
+        -> If the drug already exists
+            a)Check if the prescribers id is present in the list of ids against that 
+            drug name in Dictionary 2.
+                -> If present, do nothing
+                -> If not present, add the id to the list of prescribers in Dictionary 2
+                -> Update the cost of the drug in Dictionary 1
+                -> Update the count of the prescribers with lentgh of the list against that 
+                drug in Dictionary 2.
+     3) Sort the Dictionary 1 after all the entries are available in the dictionary
+     4) Store the dictionary to the output file.
+     
 ## Unit Testing
 
 
