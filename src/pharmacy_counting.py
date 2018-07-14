@@ -1,5 +1,8 @@
 
-#This script 
+#This program takes an input file with fields -id,prescriber_last_name,
+#prescriber_first_name,drug_name,drug_cost  and return the drugs list with 
+#the number of their unique prescribers and total cost on those drugs in an 
+#output file.  
 
 import argparse
 import sys
