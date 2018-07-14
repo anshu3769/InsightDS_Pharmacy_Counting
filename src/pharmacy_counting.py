@@ -164,10 +164,17 @@ class PharmacyData(object):
 	'''
 
         print("<--Enter extractFieldsFromDictionary  method")
+	
+	#Initialize empty dictionary for storing sorted data
         orderedDrugDictionary = {}
+	
+	# Extract number of prescribers and drug cost from the values
         for key,values in drugDictionary.items():
             drugDictionary[key] = [values[2],int(values[3])]
+	
+	#Sort the dictionary based on drug cost and then drug name
         orderedDrugDictionary = OrderedDict(sorted(drugDictionary.items(), key=lambda k: ((k[1][1],k[0])),reverse=True))
+	
         print("Exit extractFieldsFromDictionary  method-->")
         return(orderedDrugDictionary)        
     
@@ -177,6 +184,8 @@ class PharmacyData(object):
         into an output file
         '''
         print("<--Enter dictionaryToOutputFile  method")
+	
+	#Open the output file and write the dictionary into the file
         with open(outputFilePath, 'w') as file_handler:
             temp_str = "drug_name" + "," + "num_prescriber" + "," + "total_cost\n"
             file_handler.write(temp_str)
