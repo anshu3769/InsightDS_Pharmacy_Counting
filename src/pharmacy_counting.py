@@ -15,7 +15,6 @@ class PharmacyData(object):
         self.drug_name_index = 0
         self.drug_cost_index = 0
 
-        pass
 
     def isFieldANumber(self,x):
         '''
