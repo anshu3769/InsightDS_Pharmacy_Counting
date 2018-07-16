@@ -58,25 +58,28 @@ cost and if there is a tie, drug name.
             Key = Drug Name
             Value = List of subscribers by their id
             
-            
     2) The input file is read line by line and the values in the dictionaries 
     are updated as follows:
-        -> If the drug in new to the dictionary
-            a)Initialize the prescribers count to 1 
-            b)Store the prescibers count and drug cost against its name
-            in Dictionary 1
-            c) Store the prescribers id against the drug name in Dictionary 2.
-            Point to be noted = First name and last name of two prescribers can be 
-            same but the id must be unique.
+        -> If the record is valid (validity checks like number of fields in the record 
+           are correct, drug cost and id are numbers not strings, last name, first name, drug
+           names are strings etc)
+            -> If the drug in new to the dictionary
+                a)Initialize the prescribers count to 1 
+                b)Store the prescribers count and drug cost against its name
+                in Dictionary 1
+                c) Store the prescribers id against the drug name in Dictionary 2.
+                
+           Point to be noted = First name and last name of two prescribers can be 
+                same but the id must be unique.
             
-        -> If the drug already exists
-            a)Check if the prescribers id is present in the list of ids against that 
-            drug name in Dictionary 2.
-                -> If present, do nothing
-                -> If not present, add the id to the list of prescribers in Dictionary 2
-                -> Update the cost of the drug in Dictionary 1
-                -> Update the count of the prescribers with lentgh of the list against that 
-                drug in Dictionary 2.
+            -> If the drug already exists
+                a)Check if the prescribers id is present in the list of ids against that 
+                drug name in Dictionary 2.
+                    -> If present, do nothing
+                    -> If not present, add the id to the list of prescribers in Dictionary 2
+                    -> Update the cost of the drug in Dictionary 1
+                    -> Update the count of the prescribers with lentgh of the list against that 
+                    drug in Dictionary 2.
      3) Sort the Dictionary 1 after all the entries are available in the dictionary
      4) Store the dictionary to the output file.
      
