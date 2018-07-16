@@ -46,7 +46,7 @@ Read the contents of the input file and generate a list of all drugs, the total 
 who prescribed the medication, and the total drug cost,listed in descending order based on the total drug 
 cost and if there is a tie, drug name.
 
-## pharmacy_counting.py
+## Approach to solve the problem
     This script contains the code for solving the given problem. The approach behind 
     solving the problem is as follows:
 
@@ -83,7 +83,28 @@ cost and if there is a tie, drug name.
      3) Sort the Dictionary 1 after all the entries are available in the dictionary
      4) Store the dictionary to the output file.
      
-## Unit Testing
+## Test Cases identified and tested
+        1) Check for the path of input and output files given to the run.sh script as parameters
+           If any of the path does not exist, the program exits.
+            TESTED
+        2) Enter less/more number of fields in any record than specified for the problem
+           (number of fields is 5 for current problem). That record will not be counted as valid data.
+            TESTED
+        3) Use a non-numeric value as drug_cost. That record will not be counted as valid data.
+            TESTED
+        4) Use a non-numeric value as prescribers id. That record will not be counted as valid data.
+            TESTED
+        5) Use negative values for drug_cost and/or prescribers id. The record will not be counted as
+            valid data.
+            TESTED
+            
+## Test cases that can be further added if more information is provided 
+        1) First name and last name of the prescribers must be string ( if its a condition)
+        2) If the drug name is correct. It can be checked against a correct drug name list.
+   
+        Duplicate records can be removed first. It will require to read the data and store in a dictionary
+        New data will be checked against existing data in the dictionary. This dictionary will be further 
+        used for producing the final output file.
 
 
 
