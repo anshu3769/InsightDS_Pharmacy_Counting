@@ -85,7 +85,13 @@ cost and if there is a tie, drug name.
      
 ## Running instructions
      1. Copy the input file in the input/ directory. The format for the input file has been specified above.
-     2. Run the run.sh script with path to input file and output file as its arguments.
+     2. Run the run.sh script with path to input file and output file as its arguments. There are two commands
+        in the script - 
+         touch ./output/top_cost_drug.txt 
+         python ./src/pharmacy_counting.py ./input/itcont.txt ./output/top_cost_drug.txt
+     where top_cost_drug.txt is the name of the output file and input/itcont.txt is the name of the input
+     file. Replace these names with the names of your output and input file names.
+          
             Troubleshooting
                 a) If the user does not have permission to execute the script.
                     Execute the command "chmod 755 run.sh" to give the user permission to execute the script.
