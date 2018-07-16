@@ -83,6 +83,15 @@ cost and if there is a tie, drug name.
      3) Sort the Dictionary 1 after all the entries are available in the dictionary
      4) Store the dictionary to the output file.
      
+## Running instructions
+     1. Copy the input file in the input/ directory. The format for the input file has been specified above.
+     2. Run the run.sh script with path to input file and output file as its arguments.
+            Troubleshooting
+                a) If the user does not have permission to execute the script.
+                    Execute the command "chmod 755 run.sh" to give the user permission to execute the script.
+     3. The script will execute the pharmacy_counting.py script. An output file will be generated
+      at the path specified in the arguments to the run.sh script.
+     
 ## Test Cases identified and tested
         1) Check for the path of input and output files given to the run.sh script as parameters
            If any of the path does not exist, the program exits.
