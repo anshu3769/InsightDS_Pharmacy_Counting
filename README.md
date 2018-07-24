@@ -51,10 +51,10 @@ cost and if there is a tie, drug name.
     solving the problem is as follows:
 
     1) Two dictionaries are maintained.
-    Dictionary 1 -> One for storing the unique number of prescribers and total cost against a drug.
+    Dictionary 1 -> for storing the unique number of prescribers and total cost against a drug.
             Key = Drug Name
             Value = [Unique number of prescribers, total cost of the drug]
-    Dictionay 2 -> One for maintaining a list of subscribers against each drug
+    Dictionay 2 -> for maintaining a list of prescribers against each drug
             Key = Drug Name
             Value = List of subscribers by their id
             
@@ -78,7 +78,7 @@ cost and if there is a tie, drug name.
                     -> If present, do nothing
                     -> If not present, add the id to the list of prescribers in Dictionary 2
                     -> Update the cost of the drug in Dictionary 1
-                    -> Update the count of the prescribers with lentgh of the list against that 
+                    -> Update the count of the prescribers with length of the list against that 
                     drug in Dictionary 2.
      3) Sort the Dictionary 1 after all the entries are available in the dictionary
      4) Store the dictionary to the output file.
